@@ -51,6 +51,8 @@ for i = 1 : numepochs
         
         nn = nnff(nn, batch_x, batch_y);
         nn = nnbp(nn);
+        % Check numerically (slow but good to debug)
+        nnchecknumgrad(nn,batch_x,batch_y);
         nn = nnapplygrads(nn);
         
         L(n) = nn.L;

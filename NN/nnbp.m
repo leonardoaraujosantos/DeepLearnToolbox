@@ -6,7 +6,12 @@ function nn = nnbp(nn)
     sparsityError = 0;
     switch nn.output
         case 'sigm'
+            % Difference 1 (delta calculated differently) (They depend on
+            % the cost function choosen?)
             d{n} = - nn.e .* (nn.a{n} .* (1 - nn.a{n}));
+            % On my example we negate because error is calculated on different order
+            % The way from andrew Ng tutorial converge faster here
+            %d{n} = - nn.e; 
         case {'softmax','linear'}
             d{n} = - nn.e;
     end
@@ -36,7 +41,8 @@ function nn = nnbp(nn)
         end
 
     end
-
+    
+    % Divide the complete delta by the size of the batch
     for i = 1 : (n - 1)
         if i+1==n
             nn.dW{i} = (d{i + 1}' * nn.a{i}) / size(d{i + 1}, 1);

@@ -13,8 +13,9 @@ nn.activation_function = 'sigm';
 nn.learningRate = 2;
 nn.scaling_learningRate = 1;
 nn.weightPenaltyL2 = 0;
-nn.momentum = 0;
-opts.numepochs =  2000;
+% Between 0 and 1
+nn.momentum = 0.0; 
+opts.numepochs =  6000;
 % Batchsize of 4 (Batch gradient descent)
 % Batchsize of 1 (Stochastic gradient descent)
 % Batchsize of 2 (Mini-batch gradient descent)
@@ -22,8 +23,8 @@ opts.batchsize = 4;
 opts.plot=0;
 
 % Pre-initialize vectors with known values to help debug
-%nn.W{1} = [-0.7690    0.6881   -0.2164; -0.0963    0.2379   -0.1385];
-%nn.W{2} = [-0.1433   -0.4840   -0.6903];
+nn.W{1} = [-0.7690    0.6881   -0.2164; -0.0963    0.2379   -0.1385];
+nn.W{2} = [-0.1433   -0.4840   -0.6903];
  
 nn = nntrain(nn, X, Y, opts);
 
