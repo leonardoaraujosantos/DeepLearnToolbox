@@ -48,9 +48,10 @@ function nn = nnff(nn, x, y)
             nn.a{n} = bsxfun(@rdivide, nn.a{n}, sum(nn.a{n}, 2)); 
     end
 
-    %error and loss
+    % Calculate error
     nn.e = y - nn.a{n};
     
+    % Calculate loss
     switch nn.output
         case {'sigm', 'linear'}
             nn.L = 1/2 * sum(sum(nn.e .^ 2)) / m; 

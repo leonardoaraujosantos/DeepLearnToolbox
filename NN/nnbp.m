@@ -8,6 +8,8 @@ function nn = nnbp(nn)
         case 'sigm'
             % Difference 1 (delta calculated differently) (They depend on
             % the cost function choosen?)
+            % Yes it depends of the cost function because we're calculating
+            % the derivative of the cost function related to the output
             d{n} = - nn.e .* (nn.a{n} .* (1 - nn.a{n}));
             % On my example we negate because error is calculated on different order
             % The way from andrew Ng tutorial converge faster here
