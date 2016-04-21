@@ -12,7 +12,8 @@ function nn = nnbp(nn)
             % the derivative of the cost function related to the output
             d{n} = - nn.e .* (nn.a{n} .* (1 - nn.a{n}));
             % On my example we negate because error is calculated on different order
-            % The way from andrew Ng tutorial converge faster here
+            % The way from andrew Ng tutorial converge faster here, but it
+            % i showing numerical mismatch (TODO check why)
             %d{n} = - nn.e; 
         case {'softmax','linear'}
             d{n} = - nn.e;
@@ -22,6 +23,10 @@ function nn = nnbp(nn)
         switch nn.activation_function 
             case 'sigm'
                 d_act = nn.a{i} .* (1 - nn.a{i});
+                % This is the same, but the previous save one computation
+                %d_act2 = dsigm(nn.z{i}(:,2:end));
+                %d_act2 = [zeros(4,1) d_act2];
+                %d_act = d_act2;                
             case 'tanh_opt'
                 d_act = 1.7159 * 2/3 * (1 - 1/(1.7159)^2 * nn.a{i}.^2);
         end
