@@ -74,18 +74,11 @@ net.fv = [];
 
 % For each of the output maps in the final layer...
 for j = 1 : numel(net.layers{n}.a)
-    % Get the size of output map 'j' for the final layer.
     sa = size(net.layers{n}.a{j});
-    
-    % Unwind output map 'j' into a vector, and concatenate it with
-    % the feature vector. sa(1) and sa(2) are the dimensions of the
-    % output map, and sa(3) corresponds to the number of images in
-    % the input matrix 'x'.
     net.fv = [net.fv; reshape(net.layers{n}.a{j}, sa(1) * sa(2), sa(3))];
 end
-
 % Feedforward into output perceptrons
-% Multiply the feature vector by the output weights and add the bias
+% Multiply the feature vector by the output weights and add the bias 
 % term.
 net.o = sigm(net.ffW * net.fv + repmat(net.ffb, 1, size(net.fv, 2)));
 
