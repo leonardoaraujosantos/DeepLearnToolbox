@@ -1,4 +1,4 @@
-function test_example_CNN
+%function test_example_CNN
 load mnist_uint8;
 
 train_x = double(reshape(train_x',28,28,60000))/255;
@@ -17,7 +17,7 @@ cnn.layers = {
     struct('type', 'c', 'outputmaps', 6, 'kernelsize', 5) %convolution layer
     struct('type', 's', 'scale', 2) %sub sampling layer
     struct('type', 'c', 'outputmaps', 12, 'kernelsize', 5) %convolution layer
-    struct('type', 's', 'scale', 2) %subsampling layer
+    struct('type', 's', 'scale', 2) %subsampling layer    
 };
 
 
@@ -32,4 +32,5 @@ cnn = cnntrain(cnn, train_x, train_y, opts);
 
 %plot mean squared error
 figure; plot(cnn.rL);
+fprintf('Accuracy %d\n',100-er);
 assert(er<0.12, 'Too big error');
