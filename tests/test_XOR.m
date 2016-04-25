@@ -6,16 +6,16 @@ Y = [0;1;1;0];
 % Initializa random number generator
 rng(0,'v5uniform');
 
-nn = nnsetup([2 2 1]);
+nn = nnsetup([2 10 10 1]);
 
 % Change meta-parameters
-nn.activation_function = 'sigm';
-nn.learningRate = 2;
+nn.activation_function = 'tanh_opt';
+nn.learningRate = 0.01;
 nn.scaling_learningRate = 1;
-nn.weightPenaltyL2 = 0;
+nn.weightPenaltyL2 = 0.000;
 % Between 0 and 1
 nn.momentum = 0.0; 
-opts.numepochs =  6000;
+opts.numepochs =  2000;
 % Batchsize of 4 (Batch gradient descent)
 % Batchsize of 1 (Stochastic gradient descent)
 % Batchsize of 2 (Mini-batch gradient descent)
@@ -23,9 +23,9 @@ opts.batchsize = 4;
 opts.plot=0;
 
 % Pre-initialize vectors with known values to help debug
-nn.W{1} = [-0.7690    0.6881   -0.2164; -0.0963    0.2379   -0.1385];
-nn.W{2} = [-0.1433   -0.4840   -0.6903];
- 
+%nn.W{1} = [-0.7690    0.6881   -0.2164; -0.0963    0.2379   -0.1385];
+%nn.W{2} = [-0.1433   -0.4840   -0.6903];
+nn.dropoutFraction  = 0.0;%0.5;
 nn = nntrain(nn, X, Y, opts);
 
 %to display the results
@@ -40,7 +40,15 @@ for row = [1:testOutRows]
         test = [X1(row, col), X2(row, col)];
         %% Forward pass
         nn = nnff(nn, test, zeros(size(test,1)));       
-        testOut(row, col) =nn.a{3};
+        testOut(row, col) =nn.a{4};
+        
+        % Print XOR table
+        if isequal(test,[0 0]) || ...
+                isequal(test,[0 1]) || ...
+                isequal(test,[1 0]) || ...
+                isequal(test,[1 1])
+           fprintf('%d XOR %d ==> %d\n',test(1),test(2),round(nn.a{4})); 
+        end
     end
 end
 figure(2);

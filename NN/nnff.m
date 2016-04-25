@@ -18,6 +18,7 @@ function nn = nnff(nn, x, y)
                 nn.z{i} = nn.a{i - 1} * nn.W{i - 1}';
             case 'tanh_opt'
                 nn.a{i} = tanh_opt(nn.a{i - 1} * nn.W{i - 1}');
+                nn.z{i} = nn.a{i - 1} * nn.W{i - 1}';
         end
         
         %dropout
